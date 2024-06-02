@@ -6,8 +6,9 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import pojo.WorkspaceBody;
 import pojo.workspacepj;
+import utils.ConfigReader;
 
-
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,9 @@ public class workspace {
 	}
 
 	@When("pass the endpoint")
-	public void pass_the_endpoint() {
+	public void pass_the_endpoint() throws IOException {
 		response = given().baseUri(enter_the_base_url())
-				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").when().get()
+				.header("X-API-Key", ConfigReader.getAPIKey()).when().get()
 				.then().extract().response();
 	}
 
@@ -52,7 +53,7 @@ public class workspace {
 	}
 
 	@When("Send the body with {string} {string} {string}")
-	public static Response send_the_body_with(String string, String string2, String string3) {
+	public static Response send_the_body_with(String string, String string2, String string3) throws IOException {
 
 		wsp.setName(string);
 		wsp.setType(string2);
@@ -63,7 +64,7 @@ public class workspace {
 		wpspBody.setWorkspace(wsp);
 
 		response = given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
-				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").body(wpspBody)
+				.header("X-API-Key", ConfigReader.getAPIKey() ).body(wpspBody)
 				.when().post().then().extract().response();
 		return response;
 
@@ -86,9 +87,9 @@ public class workspace {
 	}
 
 	@When("Pass the body along with the newly create id")
-	public void pass_the_body_along_with_the_newly_create_id() {
+	public void pass_the_body_along_with_the_newly_create_id() throws IOException {
 		given().log().all().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
-				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
+				.header("X-API-Key", ConfigReader.getAPIKey())
 				.when().log().all().get("/"+ validate_the_body_data()).then().extract().response();
 	}
 	

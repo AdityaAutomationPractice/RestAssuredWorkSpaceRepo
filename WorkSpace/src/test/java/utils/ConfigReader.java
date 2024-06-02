@@ -16,5 +16,9 @@ public class ConfigReader {
 	public static String getWorngURL() throws IOException {
 		return getpropObject().getProperty("wrongURL");
 	}
+	
+	public static String getAPIKey() throws IOException {
+		return getpropObject().getProperty("Key");
+	}
 
 }

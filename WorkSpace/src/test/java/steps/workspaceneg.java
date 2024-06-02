@@ -22,8 +22,8 @@ public class workspaceneg {
 	Random rand = new Random();
 	
 	@When("post worng workspace id along with the url")
-	public void post_worng_workspace_id_along_with_the_url() {
-	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
+	public void post_worng_workspace_id_along_with_the_url() throws IOException {
+	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
 	    		.when().get("/"+ rand.nextInt(1000)).then().extract().response();
 	    }
 
@@ -43,7 +43,7 @@ public class workspaceneg {
 	}
 	
 	@When("Send the body with wrong type {string} {string} {string}")
-	public void send_the_body_with_wrong_type(String string, String string2, String string3) {
+	public void send_the_body_with_wrong_type(String string, String string2, String string3) throws IOException {
 		workspacepj wspj = new workspacepj();
 		wspj.setName(string);
 		wspj.setType(string2);
@@ -53,7 +53,7 @@ public class workspaceneg {
 		ws.setWorkspace(wspj);
 		
 		response = given().baseUri(workspace.enter_the_base_url())
-				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").header("'Content-Type", "application/json").body(ws)
+				.header("X-API-Key", ConfigReader.getAPIKey()).header("'Content-Type", "application/json").body(ws)
 				.when().post().then().extract().response();
 	}
 	
@@ -71,8 +71,8 @@ public class workspaceneg {
 	}
 	
 	@When("Send the body with invalid id")
-	public void send_the_body_with_invalid_id() {
-	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
+	public void send_the_body_with_invalid_id() throws IOException {
+	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
 	    		.when().delete("/" + rand.nextInt(1000)).then().extract().response();
 	}
 	
