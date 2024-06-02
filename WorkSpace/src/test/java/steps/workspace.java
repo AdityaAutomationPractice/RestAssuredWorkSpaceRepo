@@ -24,8 +24,8 @@ public class workspace {
 	static workspacepj wsp = new workspacepj();
 
 	@Given("Enter the baseURL")
-	public static String enter_the_base_url() {
-		return base_URL;
+	public static String enter_the_base_url() throws IOException {
+		return ConfigReader.getCorrectURL();
 	}
 
 	@When("pass the endpoint")
@@ -88,6 +88,7 @@ public class workspace {
 
 	@When("Pass the body along with the newly create id")
 	public void pass_the_body_along_with_the_newly_create_id() throws IOException {
+		
 		given().log().all().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
 				.header("X-API-Key", ConfigReader.getAPIKey())
 				.when().log().all().get("/"+ validate_the_body_data()).then().extract().response();

@@ -13,6 +13,10 @@ public class ConfigReader {
 		return prop;
 	}
 	
+	public static String getCorrectURL() throws IOException {
+		return getpropObject().getProperty("correctURL");
+	}
+	
 	public static String getWorngURL() throws IOException {
 		return getpropObject().getProperty("wrongURL");
 	}
