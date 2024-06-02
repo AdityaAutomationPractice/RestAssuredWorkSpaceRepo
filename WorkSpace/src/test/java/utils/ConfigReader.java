@@ -22,7 +22,7 @@ public class ConfigReader {
 	}
 	
 	public static String getAPIKey() throws IOException {
-		return getpropObject().getProperty("Key");
+		return getpropObject().getProperty("key");
 	}
 
 }

@@ -17,8 +17,7 @@ import org.testng.Assert;
 import static io.restassured.RestAssured.given;
 
 public class workspace {
-
-	static String base_URL = "https://api.getpostman.com/workspaces";
+	
 	static Response response;
 
 	static workspacepj wsp = new workspacepj();
