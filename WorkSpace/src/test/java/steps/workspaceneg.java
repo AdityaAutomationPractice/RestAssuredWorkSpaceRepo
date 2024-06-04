@@ -4,11 +4,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import pojo.WorkspaceBody;
-import pojo.workspacepj;
+import pojo.Workspacepj;
 import utils.ConfigReader;
 
 import static io.restassured.RestAssured.given;
-import static org.testng.Assert.assertTrue;
+
 
 import java.io.IOException;
 import java.util.Random;
@@ -16,14 +16,14 @@ import java.util.Random;
 import org.testng.Assert;
 
 
-public class workspaceneg {
+public class Workspaceneg {
 	Response response;
 
 	Random rand = new Random();
 	
 	@When("post worng workspace id along with the url")
 	public void post_worng_workspace_id_along_with_the_url() throws IOException {
-	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
+	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
 	    		.when().get("/"+ rand.nextInt(1000)).then().extract().response();
 	    }
 
@@ -44,7 +44,7 @@ public class workspaceneg {
 	
 	@When("Send the body with wrong type {string} {string} {string}")
 	public void send_the_body_with_wrong_type(String string, String string2, String string3) throws IOException {
-		workspacepj wspj = new workspacepj();
+		Workspacepj wspj = new Workspacepj();
 		wspj.setName(string);
 		wspj.setType(string2);
 		wspj.setDescription(string3);
@@ -52,7 +52,7 @@ public class workspaceneg {
 		WorkspaceBody ws = new WorkspaceBody();
 		ws.setWorkspace(wspj);
 		
-		response = given().baseUri(workspace.enter_the_base_url())
+		response = given().baseUri(Workspace.enter_the_base_url())
 				.header("X-API-Key", ConfigReader.getAPIKey()).header("'Content-Type", "application/json").body(ws)
 				.when().post().then().extract().response();
 	}
@@ -72,7 +72,7 @@ public class workspaceneg {
 	
 	@When("Send the body with invalid id")
 	public void send_the_body_with_invalid_id() throws IOException {
-	    response = given().baseUri(workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
+	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
 	    		.when().delete("/" + rand.nextInt(1000)).then().extract().response();
 	}
 	

@@ -5,7 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import pojo.WorkspaceBody;
-import pojo.workspacepj;
+import pojo.Workspacepj;
 import utils.ConfigReader;
 
 import java.io.IOException;
@@ -15,12 +15,14 @@ import java.util.Map;
 import org.testng.Assert;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
 
-public class workspace {
+public class Workspace {
 	
 	static Response response;
+	static String id;
 
-	static workspacepj wsp = new workspacepj();
+	static Workspacepj wsp = new Workspacepj();
 
 	@Given("Enter the baseURL")
 	public static String enter_the_base_url() throws IOException {
@@ -77,35 +79,75 @@ public class workspace {
 	}
 
 	@Then("validate the body data")
-	public String validate_the_body_data() {
-		String id = response.jsonPath().get("workspace.id");
+	public void validate_the_body_data() {
+		id = response.jsonPath().get("workspace.id");
 		String name = response.jsonPath().get("workspace.name");
 		Assert.assertNotNull(id);
 		Assert.assertEquals(name, wsp.getName());
-		return id;
+		
 	}
 
 	@When("Pass the body along with the newly create id")
 	public void pass_the_body_along_with_the_newly_create_id() throws IOException {
 		
-		given().log().all().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
+		given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
 				.header("X-API-Key", ConfigReader.getAPIKey())
-				.when().log().all().get("/"+ validate_the_body_data()).then().extract().response();
+				.when().get("/"+ id).then().extract().response();
 	}
 	
 	@Then("validate the status code {int} or not")
 	public void validate_the_status(Integer int1) {
-		int actual_code = response.statusCode();
-		int expected_code = 200;
-		Assert.assertEquals(expected_code, actual_code);
+		Assert.assertEquals(200, response.statusCode());
 	}
 
 	@Then("validate the body")
 	public void validate_the_body() {
 		String name = response.jsonPath().getString("workspace.name");
-		String id = response.jsonPath().getString("workspace.id");
+		String user_id = response.jsonPath().getString("workspace.id");
 		Assert.assertEquals(name, wsp.getName());
-//		Assert.assertEquals(id, validate_the_body_data());
+		Assert.assertEquals(user_id, id);
+	}
+	@When("Pass the body along with the new data")
+	public void pass_the_body_along_with_the_new_data(io.cucumber.datatable.DataTable dataTable) throws IOException {
+	    List<Map<String, String>> obj =   dataTable.asMaps(String.class , String.class);
+	    String json = null;
+	    for(Map<String, String> obj1 : obj) {
+	    	json =String.format("{\n" +
+	                "    \"workspace\": {\n" +
+	                "        \"name\": \"%s\",\n" +
+	                "        \"type\": \"%s\",\n" +
+	                "        \"description\": \"%s\"\n" +
+	                "    }\n" +
+	                "}",
+	                obj1.get("name"),
+	                obj1.get("type"),
+	                obj1.get("description"));  
+	    }
+	    
+	    response = given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
+				.header("X-API-Key", ConfigReader.getAPIKey()).body(json).when().put("/"+ id).then().extract().response();
+	}
+
+	@Then("validate the status code and body")
+	public void validate_the_status_code_and_body() {
+	    Assert.assertEquals(200, response.statusCode());
+	}
+
+	
+	@When("Send the body along with id to delete the data")
+	public void delete_code() throws IOException {
+		response = given().baseUri(enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey()).when().delete("/"+ id).then().extract().response();
+	}
+	
+	@Then("check the status code {int} or nott")
+	public void validate_the_status_code_demo(Integer int1) {
+		Assert.assertEquals(200, response.statusCode());
+	}
+	
+	@Then("get the body again and validate the code")
+	public void get_the_body_again_and_validate_the_code() {
+	    String deleted_id = response.jsonPath().get("workspace.id");
+	    Assert.assertEquals(deleted_id, id);
 	}
 
 }

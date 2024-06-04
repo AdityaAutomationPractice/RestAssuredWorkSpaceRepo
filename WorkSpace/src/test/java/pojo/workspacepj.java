@@ -1,6 +1,6 @@
 package pojo;
 
-public class workspacepj {
+public class Workspacepj {
 	private String name;
 	private String type;
 	private String description;

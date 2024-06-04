@@ -1,13 +1,13 @@
 package pojo;
 
 public class WorkspaceBody {
-	private workspacepj workspace;
+	private Workspacepj workspace;
 	
-	public workspacepj getWorkspace() {
+	public Workspacepj getWorkspace() {
 		return workspace;
 	}
 
-	public void setWorkspace(workspacepj workspace) {
+	public void setWorkspace(Workspacepj workspace) {
 		this.workspace = workspace;
 	}
 }
