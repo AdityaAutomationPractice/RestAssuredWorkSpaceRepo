@@ -26,13 +26,13 @@ public class Workspace {
 
 	@Given("Enter the baseURL")
 	public static String enter_the_base_url() throws IOException {
-		return ConfigReader.getCorrectURL();
-	}
+		return ConfigReader.getpropObject();
+	}	
 
 	@When("pass the endpoint")
 	public void pass_the_endpoint() throws IOException {
 		response = given().baseUri(enter_the_base_url())
-				.header("X-API-Key", ConfigReader.getAPIKey()).when().get()
+				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").when().get()
 				.then().extract().response();
 	}
 
@@ -65,7 +65,7 @@ public class Workspace {
 		wpspBody.setWorkspace(wsp);
 
 		response = given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
-				.header("X-API-Key", ConfigReader.getAPIKey() ).body(wpspBody)
+				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf" ).body(wpspBody)
 				.when().post().then().extract().response();
 		return response;
 
@@ -91,7 +91,7 @@ public class Workspace {
 	public void pass_the_body_along_with_the_newly_create_id() throws IOException {
 		
 		given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
-				.header("X-API-Key", ConfigReader.getAPIKey())
+				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
 				.when().get("/"+ id).then().extract().response();
 	}
 	
@@ -125,7 +125,7 @@ public class Workspace {
 	    }
 	    
 	    response = given().baseUri(enter_the_base_url()).header("Content-Type", "application/json")
-				.header("X-API-Key", ConfigReader.getAPIKey()).body(json).when().put("/"+ id).then().extract().response();
+				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").body(json).when().put("/"+ id).then().extract().response();
 	}
 
 	@Then("validate the status code and body")
@@ -136,7 +136,7 @@ public class Workspace {
 	
 	@When("Send the body along with id to delete the data")
 	public void delete_code() throws IOException {
-		response = given().baseUri(enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey()).when().delete("/"+ id).then().extract().response();
+		response = given().baseUri(enter_the_base_url()).header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").when().delete("/"+ id).then().extract().response();
 	}
 	
 	@Then("check the status code {int} or nott")

@@ -1,6 +1,6 @@
-pojo\workspacepj.class
 utils\TestRunner.class
-steps\workspaceneg.class
-steps\workspace.class
+pojo\Workspacepj.class
+steps\Workspaceneg.class
+steps\Workspace.class
 utils\ConfigReader.class
 pojo\WorkspaceBody.class

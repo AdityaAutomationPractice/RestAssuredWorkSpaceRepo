@@ -20,10 +20,11 @@ public class Workspaceneg {
 	Response response;
 
 	Random rand = new Random();
+	String wrong_URL = "https://api.getpostman.com/workspac";
 	
 	@When("post worng workspace id along with the url")
 	public void post_worng_workspace_id_along_with_the_url() throws IOException {
-	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
+	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
 	    		.when().get("/"+ rand.nextInt(1000)).then().extract().response();
 	    }
 
@@ -53,7 +54,7 @@ public class Workspaceneg {
 		ws.setWorkspace(wspj);
 		
 		response = given().baseUri(Workspace.enter_the_base_url())
-				.header("X-API-Key", ConfigReader.getAPIKey()).header("'Content-Type", "application/json").body(ws)
+				.header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf").header("'Content-Type", "application/json").body(ws)
 				.when().post().then().extract().response();
 	}
 	
@@ -72,7 +73,7 @@ public class Workspaceneg {
 	
 	@When("Send the body with invalid id")
 	public void send_the_body_with_invalid_id() throws IOException {
-	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", ConfigReader.getAPIKey())
+	    response = given().baseUri(Workspace.enter_the_base_url()).header("X-API-Key", "PMAK-665abcd50d870800017d91a4-949307e6e31f3ca188e6467a0b4437ffdf")
 	    		.when().delete("/" + rand.nextInt(1000)).then().extract().response();
 	}
 	
@@ -92,7 +93,7 @@ public class Workspaceneg {
 	
 	@When("Send the wrong URL in path")
 	public void send_the_wrong_url_in_path() throws IOException {
-	    response = given().baseUri(ConfigReader.getWorngURL()).when().get().then().extract().response();
+	    response = given().baseUri(wrong_URL).when().get().then().extract().response();
 	    
 	}
 
